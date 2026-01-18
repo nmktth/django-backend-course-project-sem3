@@ -1,0 +1,11 @@
+<div class="address-box">
+    <p>{{ user.first_name }} {{ user.last_name }}</p>
+    <p>{{ user.email }}</p>
+    <p>{{ user.username }}</p>
+
+    <button hx-get="{% url 'albums:edit_account_details' %}"
+            hx-target="#account-details-block"
+            hx-swap="innerHTML">
+        Редактировать
+    </button>
+</div>

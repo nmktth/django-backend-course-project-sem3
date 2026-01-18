@@ -1,0 +1,14 @@
+<form hx-post="{% url 'albums:update_account_details' %}"
+      hx-target="#account-details-block"
+      hx-swap="innerHTML"
+      class="edit_account">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Сохранить</button>
+    <button hx-get="{% url 'albums:account_details' %}"
+            hx-target="#account-details-block"
+            type="button">
+        Отмена
+    </button>
+</form>

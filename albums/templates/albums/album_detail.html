@@ -1,0 +1,58 @@
+{% extends 'albums/base.html' %}
+
+{% block extra_head %}
+    {% if album.layout_template and album.layout_template.css_styles %}
+        <style type="text/css">
+            {{ album.layout_template.css_styles|safe }}
+        </style>
+    {% endif %}
+{% endblock %}
+
+
+
+
+{% block title %}{{ album.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="album-header">
+        <h2>{{ album.title }}</h2>
+        <p>{{ album.description }}</p>
+        
+        {% if album.user == request.user %}
+        <a href="{% url 'albums:upload_photo' album.id %}" class="btn-primary">
+            ➕ Загрузить фото
+        </a>
+        {% endif %}
+        <blockquote></blockquote>
+        <a href="{% url 'albums:profile' %}" class="btn-secondary">← Назад на профиль</a>
+    </div>
+    
+    <div class="photos-grid">
+        {% for photo in photos %}
+        <div class="photo-item">
+            <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+            <p>{{ photo.title }}</p>
+        </div>
+        {% empty %}
+        <p>Фото нет. {% if album.user == request.user %}<a href="{% url 'albums:upload_photo' album.id %}">Загрузи первое!</a>{% endif %}</p>
+        {% endfor %}
+    </div>
+
+    <!-- DEBUG CSS: "{{ album.layout_template|default:'NO TEMPLATE' }}"
+    DEBUG CSS CONTENT: "{{ album.layout_template.css_styles|default:'EMPTY' }}" -->
+    {% for page in pages %}
+    <div class="pages">
+            <h3>Страница {{ page.page_number }}</h3>
+            <div class="album-page">
+                {% for photo in page.photos.all %}
+                <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+                {% endfor %}
+            </div>
+            {% empty %}
+            <p>Страниц пока нет.</p>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

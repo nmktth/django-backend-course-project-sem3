@@ -1,0 +1,58 @@
+{% extends 'albums/base.html' %}
+
+{% block title %}Your Profile{% endblock %}
+
+{% block content %}
+<div class="profile">
+    <div class="profile-section">
+        <div class="stats-section">
+            <h2>📊 Статистика</h2>
+            <div class="stats">
+                <div>📖 Альбомов: {{ user_stats.total_albums }}</div>
+                {% if user_stats.is_premium %}
+                    <div>💎 Премиум до {{ user.premium_until|date:"d.m.Y" }}</div>
+                {% else %}
+                    <div>💰 Станьте премиум!</div>
+                {% endif %}
+            </div>
+        </div>
+        <h2>Ваши данные</h2>
+
+        <!-- ВСЁ управление аккаунтом тут -->
+        <div id="account-details-block"
+             hx-get="{% url 'albums:account_details' %}"
+             hx-trigger="load"
+             hx-swap="innerHTML">
+        </div>
+
+        <a href="{% url 'albums:logout' %}" class="link">Выйти из аккаунта</a>
+    </div>
+
+    <div class="content-add">
+        <div class="section-header">
+            <h2>Ваши альбомы:</h2>
+            <button class="btn-primary"
+                    hx-get="{% url 'albums:create_album_form' %}"
+                    hx-target="#create-album-modal"
+                    hx-swap="innerHTML">
+                ➕ Новый альбом
+            </button>
+        </div>
+
+        <div id="create-album-modal" class="modal"></div>
+
+        <div class="albums-list">
+            {% for album in albums %}
+                <div class="album-item">
+                    <a href="{% url 'albums:album_detail' album.id %}">
+                        📖 {{ album.title }}
+                        <small>({{ album.photos.count }} фото)</small>
+                    </a>
+                </div>
+            {% empty %}
+                <p>Альбомов нет. Создай первый! 😊</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

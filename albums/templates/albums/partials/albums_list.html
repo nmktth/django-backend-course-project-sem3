@@ -1,0 +1,12 @@
+<div class="albums-list">
+    {% for album in albums %}
+    <div class="album-item">
+        <a href="{% url 'albums:album_detail' album.id %}">
+            📖 {{ album.title }}
+            <small>({{ album.photos.count }} фото)</small>
+        </a>
+    </div>
+    {% empty %}
+    <p>Альбомов нет. Создай первый! 😊</p>
+    {% endfor %}
+</div>

@@ -1,0 +1,23 @@
+{% extends 'albums/base.html' %}
+
+{% block title %}Загрузить фото{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Загрузить фото в альбом: {{ album.title }}</h2>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label>Выбери фото (можно несколько):</label>
+            <input type="file" name="photos" multiple accept="image/*" required>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Загрузить</button>
+            <a href="{% url 'albums:album_detail' album.id %}" class="btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

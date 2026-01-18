@@ -1,29 +1,31 @@
 from django.contrib import admin
-from import_export.admin import ExportMixin
 from .models import Album, Photo, AlbumTemplate, AlbumPage, PhotoEdit
-from .resources import AlbumResource
 
 @admin.register(Album)
-class AlbumAdmin(ExportMixin, admin.ModelAdmin):
-    resource_class = AlbumResource
-    list_display = ('title', 'user', 'is_public', 'created_at')
-    list_filter = ('is_public', 'created_at')
-    search_fields = ('title', 'user__username')
+class AlbumAdmin(admin.ModelAdmin):
+    list_display = ['title', 'user', 'created_at', 'is_public']
+    list_filter = ['is_public', 'created_at']
+    search_fields = ['title', 'description']
+    inlines = []
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('title', 'album', 'uploaded_at', 'file_size')
-    list_filter = ('uploaded_at', 'album')
+    list_display = ['title', 'album', 'uploaded_at']
+    list_filter = ['album']
+    search_fields = ['title']
 
 @admin.register(AlbumTemplate)
 class AlbumTemplateAdmin(admin.ModelAdmin):
-    list_display = ('name', 'template_type', 'is_premium')
-    list_filter = ('is_premium', 'template_type')
+    list_display = ['name', 'is_premium']
+    list_filter = ['is_premium']
+    search_fields = ['name']
 
 @admin.register(AlbumPage)
 class AlbumPageAdmin(admin.ModelAdmin):
-    list_display = ('album', 'page_number', 'layout')
+    list_display = ['album', 'page_number']
+    list_filter = ['album']
 
 @admin.register(PhotoEdit)
 class PhotoEditAdmin(admin.ModelAdmin):
-    list_display = ('photo', 'brightness', 'contrast', 'saturation')
+    list_display = ['photo', 'created_at']
+    list_filter = ['created_at']
