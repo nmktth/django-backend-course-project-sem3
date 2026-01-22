@@ -171,6 +171,7 @@ class AlbumViewSet(UserOwnedMixin, viewsets.ModelViewSet):
             final_query = final_query & ~Q(is_public=True)
 
         albums = Album.objects.filter(final_query).distinct()
+        # albums = Album.objects.filter(final_query).select_related('user').distinct()
         serializer = self.get_serializer(albums, many=True)
         return Response(serializer.data)
 
@@ -601,12 +602,17 @@ def profile_view(request):
 
 
 def album_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
-    album = get_object_or_404(Album, pk=pk)
-
-    # Check permissions
+    album = (
+        Album.objects
+        .select_related('user')  #Владелец альбома
+        .prefetch_related('photos', 'editors')  #Фото и редакторы
+        .get(pk=pk)
+    )
+    
+    #Уже в памяти, без доп запросов
     is_owner = request.user.is_authenticated and album.user == request.user
     is_editor = request.user.is_authenticated and (
-        is_owner or album.editors.filter(id=request.user.id).exists()  # type: ignore
+        is_owner or album.editors.filter(id=request.user.id).exists()
     )
 
     if not is_editor and not album.is_public:

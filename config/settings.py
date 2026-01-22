@@ -58,8 +58,8 @@ INSTALLED_APPS = [
     'django_filters',
     'simple_history',
     'import_export',
-    'cloudinary_storage',
-    'cloudinary',
+    # 'cloudinary_storage',
+    # 'cloudinary',
     'albums',
 ]
 
