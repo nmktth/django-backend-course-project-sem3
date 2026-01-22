@@ -1,0 +1,16 @@
+# Игнорируем файлы, которые не должны попадать в образ
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.git/
+.gitignore
+.env
+db.sqlite3
+media/
+staticfiles/
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,18 @@
+<!-- Share Modal -->
+<div id="sharePhotoModal" class="modal-overlay">
+  <div class="modal-box">
+    <span class="close-modal">&times;</span>
+    <h3>Поделиться фото</h3>
+    <div id="shareLoading" class="hidden">Генерация ссылки...</div>
+    <div id="shareContent" class="hidden">
+      <p>Ссылка для просмотра:</p>
+      <div class="share-input-group">
+        <input type="text" id="photoShareLink" readonly />
+        <button class="btn-copy" id="copyLinkBtn">Копировать</button>
+      </div>
+      <div class="modal-footer-actions">
+        <button class="btn-sm btn-danger" id="disableLinkBtn">Отключить ссылку</button>
+      </div>
+    </div>
+  </div>
+</div>

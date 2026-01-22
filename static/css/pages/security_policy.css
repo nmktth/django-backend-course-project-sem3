@@ -1,0 +1,24 @@
+.security-container {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    max-width: 800px;
+}
+
+.security-section {
+    margin-top: 2rem;
+}
+
+.security-section p {
+    line-height: 1.6;
+    color: var(--gray-700);
+    margin-top: 0.5rem;
+}
+
+.security-section h2 {
+    color: var(--gray-900);
+    font-size: 1.5rem;
+}
+
+.text-muted {
+    color: var(--gray-400);
+}

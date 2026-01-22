@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card profile-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Редактирование профиля</h1>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="auth-form">
+            {% csrf_token %}
+            
+            <!-- Avatar Section -->
+            <div class="avatar-upload-wrapper">
+                <div class="avatar-preview-container">
+                    {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" class="avatar-image" width="150" height="150" alt="Avatar" loading="lazy">
+                    {% else %}
+                        <div class="avatar-placeholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <label for="id_avatar" class="avatar-overlay">
+                        <i class="fas fa-camera"></i>
+                        <span>Изменить</span>
+                    </label>
+                </div>
+                
+                <div class="visually-hidden-input">
+                    <input type="file" name="avatar" accept="image/*" id="id_avatar">
+                </div>
+            </div>
+
+            <!-- Merged Fields -->
+            <div class="form-section-merged">
+                {% for field in user_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <small class="form-error">{{ field.errors.0 }}</small>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                
+                {% for field in profile_form %}
+                {% if field.name != 'avatar' %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <small class="form-error">{{ field.errors.0 }}</small>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="profile-actions">
+                <a href="{% url 'profile' %}" class="btn btn-secondary">Отмена</a>
+                <button type="submit" class="auth-button">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const avatarInput = document.getElementById('id_avatar');
+    const avatarPreviewContainer = document.querySelector('.avatar-preview-container');
+    
+    if (avatarInput && avatarPreviewContainer) {
+        avatarInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Check if there is an existing image
+                    let img = avatarPreviewContainer.querySelector('.avatar-image');
+                    if (!img) {
+                        // If placeholder exists, remove it
+                        const placeholder = avatarPreviewContainer.querySelector('.avatar-placeholder');
+                        if (placeholder) {
+                            placeholder.style.display = 'none';
+                        }
+                        // Create new image
+                        img = document.createElement('img');
+                        img.className = 'avatar-image';
+                        // Insert as first child
+                        avatarPreviewContainer.insertBefore(img, avatarPreviewContainer.firstChild);
+                    }
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,221 @@
+.hero-section {
+  padding-top: 4rem; /* Reduced since body now has navbar offset */
+  padding-bottom: 4rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    padding-top: 6rem;
+    padding-bottom: 8rem;
+  }
+}
+
+.hero-title {
+  font-size: 2.25rem; /* 4xl */
+  font-weight: 800; /* extrabold */
+  letter-spacing: -0.025em; /* tight */
+  color: var(--gray-900);
+}
+
+@media (min-width: 640px) {
+  .hero-title {
+    font-size: 3rem; /* sm:5xl */
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 3.75rem; /* md:6xl */
+  }
+}
+
+.hero-highlight {
+  color: var(--primary-color);
+}
+
+.hero-subtitle {
+  margin-top: 1rem; /* mt-4 */
+  max-width: 32rem; /* max-w-2xl */
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.25rem; /* xl */
+  color: var(--text-light);
+}
+
+.hero-actions {
+  margin-top: 2rem; /* mt-8 */
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* x-4 */
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+.btn-lg {
+  padding: 0.75rem 2rem; /* px-8 py-3 */
+  font-size: 1rem; /* base */
+  border-radius: var(--radius-md);
+}
+
+.btn-secondary {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-bg);
+}
+
+/* Features Section */
+.features-section {
+  padding: 3rem 0; /* py-12 */
+  background-color: var(--white);
+}
+
+.section-header {
+  text-align: center;
+  max-width: 64rem; /* max-w-4xl */
+  margin: 0 auto 3rem auto;
+  padding: 0 1rem;
+}
+
+.section-eyebrow {
+  font-size: 1rem; /* base */
+  font-weight: 600;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wide */
+}
+
+.section-title {
+  margin-top: 0.5rem; /* mt-2 */
+  font-size: 1.875rem; /* 3xl */
+  font-weight: 800; /* extrabold */
+  letter-spacing: -0.025em; /* tight */
+  color: var(--gray-900);
+}
+
+@media (min-width: 640px) {
+  .section-title {
+    font-size: 2.25rem; /* 4xl */
+  }
+}
+
+.section-description {
+  margin-top: 1rem; /* mt-4 */
+  max-width: 32rem; /* max-w-2xl */
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.25rem; /* xl */
+  color: var(--text-light);
+}
+
+.features-grid {
+  margin-top: 2.5rem; /* mt-10 */
+}
+
+/* Individual Feature Card would go here if we were breaking it down further, 
+   but structure is: grid -> col -> card */
+.feature-card {
+  display: flex;
+}
+
+.feature-icon-wrapper {
+  flex-shrink: 0;
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem; /* 12 */
+  width: 3rem; /* 12 */
+  border-radius: var(--radius-md);
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.feature-content {
+  margin-left: 1rem; /* ml-4 */
+}
+
+.feature-title {
+  font-size: 1.125rem; /* lg */
+  line-height: 1.5rem; /* 6 */
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.feature-description {
+  margin-top: 0.5rem; /* mt-2 */
+  font-size: 1rem; /* base */
+  color: var(--text-light);
+}
+
+/* CTA Section */
+.cta-section {
+  background-color: var(--gray-50);
+}
+
+.cta-section .section-title {
+  margin-top: 0;
+}
+
+.cta-section .feature-description {
+  color: var(--primary-dark);
+}
+
+.cta-container {
+  max-width: 80rem; /* 7xl */
+  margin: 0 auto;
+  padding: 3rem 1rem; /* py-12 px-4 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .cta-container {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+@media (min-width: 640px) {
+  .cta-container {
+    padding: 4rem 1.5rem; /* px-6 lg:py-16 */
+  }
+}
+
+@media (min-width: 1024px) {
+  .cta-container {
+    padding: 4rem 2rem; /* lg:px-8 */
+  }
+}
+
+.features-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}

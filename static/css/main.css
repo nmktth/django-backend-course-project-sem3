@@ -1,0 +1,18 @@
+/* Base */
+@import url('base/reset.css');
+
+/* Components */
+@import url('components/navbar.css');
+@import url('components/footer.css');
+@import url('components/loader.css');
+
+/* Pages */
+@import url('pages/index.css');
+@import url('pages/auth.css');
+@import url('pages/dashboard.css');
+@import url('pages/album_detail.css');
+@import url('pages/profile.css');
+@import url('pages/profile_view.css');
+@import url('pages/public_photo.css');
+@import url('pages/security_policy.css');
+@import url('pages/error.css');

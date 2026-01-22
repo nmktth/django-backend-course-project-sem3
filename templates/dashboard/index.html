@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container dashboard-container">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Мои Альбомы</h1>
+    <a href="{% url 'create_album' %}" class="btn btn-primary">
+      <i class="fas fa-plus btn-icon"></i> Новый Альбом
+    </a>
+  </div>
+
+  <div class="filter-bar">
+    <form method="get" class="filter-form">
+      <div class="search-input-group">
+        <i class="fas fa-search search-icon"></i>
+        <input 
+          type="text" 
+          name="q" 
+          placeholder="Поиск по названию или описанию..." 
+          value="{{ current_q }}"
+          class="search-input"
+        >
+      </div>
+      
+      <select name="status" class="filter-select" onchange="this.form.submit()">
+        <option value="" {% if not current_status %}selected{% endif %}>Все альбомы</option>
+        <option value="public" {% if current_status == 'public' %}selected{% endif %}>Публичные</option>
+        <option value="private" {% if current_status == 'private' %}selected{% endif %}>Личные</option>
+      </select>
+      
+      <select name="ordering" class="filter-select" onchange="this.form.submit()">
+        <option value="-created_at" {% if current_ordering == '-created_at' %}selected{% endif %}>Сначала новые</option>
+        <option value="created_at" {% if current_ordering == 'created_at' %}selected{% endif %}>Сначала старые</option>
+        <option value="title" {% if current_ordering == 'title' %}selected{% endif %}>По названию (А-Я)</option>
+        <option value="-title" {% if current_ordering == '-title' %}selected{% endif %}>По названию (Я-А)</option>
+      </select>
+      
+      {% comment %} <button type="submit" class="btn btn-primary filter-btn">Найти</button> {% endcomment %}
+      
+      {% if current_q or current_status %}
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Сбросить</a>
+      {% endif %}
+    </form>
+  </div>
+
+  {% if albums %}
+  <div class="albums-grid">
+    {% for album in albums %}
+    <a href="{% url 'album_detail' album.id %}" class="album-card">
+      <div class="album-preview">
+        {% if album.photos.first %}
+        <img src="{{ album.photos.first.image.url }}" alt="{{ album.title }}" loading="lazy" />
+        {% else %}
+        <i class="fas fa-images album-preview-icon"></i>
+        {% endif %}
+      </div>
+      <div class="album-content">
+        <h3 class="album-title">{{ album.title }}</h3>
+        <div class="album-meta">
+          <span><i class="fas fa-camera"></i> {{ album.photos.count }} фото</span>
+          <span>{{ album.created_at|date:"d.m.Y" }}</span>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <i class="fas fa-folder-open"></i>
+    </div>
+    <p class="empty-state-text">У вас пока нет ни одного альбома.</p>
+    <a href="{% url 'create_album' %}" class="btn btn-primary">Создать первый альбом</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

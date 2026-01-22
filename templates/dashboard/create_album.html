@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container dashboard-container">
+    <div class="dashboard-header dashboard-header-center">
+        <h1 class="dashboard-title">Создание Альбома</h1>
+    </div>
+
+    <div class="upload-form-container">
+        <form method="post" enctype="multipart/form-data" class="auth-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_title" class="form-label">Название альбома</label>
+                <input type="text" name="title" id="id_title" class="form-input" required placeholder="Например: Отпуск 2024">
+            </div>
+
+            <div class="form-group">
+                <label for="id_description" class="form-label">Описание (необязательно)</label>
+                <textarea name="description" id="id_description" class="form-input" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Фотографии</label>
+                <div class="file-drop-zone" id="drop-zone">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <p>Нажмите для выбора фото или перетащите их сюда</p>
+                </div>
+                <input type="file" name="photos" id="id_photos" multiple accept="image/*" class="hidden-input">
+                <!-- Container for previews -->
+                <div id="preview-container" class="preview-container">
+                </div>
+                <div id="file-list" class="file-list-info"></div>
+            </div>
+
+            <div class="album-form-actions">
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary cancel-btn">Отмена</a>
+                <button type="submit" class="auth-button submit-btn">Создать</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/pages/create_album.js' %}"></script>
+{% endblock %}

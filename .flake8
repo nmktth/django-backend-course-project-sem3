@@ -1,0 +1,9 @@
+[flake8]
+# Исключаем папки, которые не нужно проверять
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,venv,migrations,staticfiles,media
+# Максимальная длина строки (Django рекомендует 119/120)
+max-line-length = 120
+# Игнорируем некоторые ошибки (необязательно)
+# E203 whitespace before ':' (для совместимости с Black)
+# W503 line break before binary operator
+extend-ignore = E203, W503

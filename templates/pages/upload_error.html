@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container error-container">
+    <div class="alert alert-danger error-alert">
+        <h2 class="error-title">Ошибка загрузки</h2>
+        <p class="error-message">Размер одного или нескольких файлов превышает допустимый лимит.</p>
+        <p>Максимальный размер файла: <strong>10 МБ</strong>.</p>
+        <p>Пожалуйста, выберите файлы меньшего размера и попробуйте снова.</p>
+        
+        <div class="error-actions">
+            <button onclick="history.back()" class="btn-primary btn-back">
+                Вернуться назад
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,156 @@
+/* Profile Page Specific Styles */
+
+/* Extend auth-card for wider profile form */
+.auth-card.profile-card {
+  max-width: 40rem;
+}
+
+@media (max-width: 640px) {
+  .auth-card.profile-card {
+    max-width: 100%;
+    margin: 0 0.5rem;
+  }
+}
+
+.profile-section-title {
+  font-size: 1.1rem;
+  color: var(--gray-800);
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  padding-bottom: 0.5rem;
+}
+
+.profile-section-spacer {
+  margin-top: 2rem;
+}
+
+.form-error {
+  color: var(--error-color, red);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Old avatar preview styles - keeping for safety but likely unused */
+.current-avatar-preview {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.current-avatar-label {
+  font-size: 0.875rem;
+  color: var(--text-light);
+}
+
+.current-avatar-img {
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.profile-actions .btn {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+}
+
+.profile-actions .auth-button {
+  margin-top: 0;
+}
+
+@media (max-width: 480px) {
+  .profile-actions {
+    flex-direction: column;
+  }
+}
+
+/* Avatar Upload Styles */
+.avatar-upload-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.avatar-preview-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  border: 4px solid var(--white);
+  background-color: var(--gray-200);
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gray-200);
+  color: var(--gray-400);
+  font-size: 4rem;
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.avatar-preview-container:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.avatar-overlay i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.avatar-overlay span {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Hide the default Django file input widget structure */
+.visually-hidden-input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  overflow: hidden;
+}
+
+/* Clean up form layout */
+.form-section-merged {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}

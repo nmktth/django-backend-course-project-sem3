@@ -1,0 +1,97 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">
+            Сохрани свои <span class="hero-highlight">лучшие моменты</span>
+        </h1>
+        <p class="hero-subtitle">
+            Создавай великолепные фотоальбомы и коллажи автоматически. Загружай фото, выбирай лучшие снимки и позволь нашему алгоритму сделать магию.
+        </p>
+        <div class="hero-actions">
+            <a href="/api/schema/swagger-ui/" class="btn btn-primary btn-lg" target="_blank">Попробовать API</a>
+            <a href="#" class="btn btn-secondary btn-lg">Узнать больше</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-eyebrow">Возможности</h2>
+            <p class="section-title">Всё для ваших воспоминаний</p>
+            <p class="section-description">
+                Продвинутый инструмент для организации и оформления ваших фотографий.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="grid features-list-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Умные Альбомы</h3>
+                        <p class="feature-description">
+                            Автоматическая организация фото по датам и событиям. Создавайте свои коллекции.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Генерация Коллажей</h3>
+                        <p class="feature-description">
+                            Создавайте красивые коллажи из ваших любимых фотографий одним кликом.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Экспорт Данных</h3>
+                        <p class="feature-description">
+                            Выгружайте отчеты и списки альбомов в Excel для удобного управления.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-container">
+        <div>
+            <h2 class="section-title">Готовы начать?</h2>
+            <p class="feature-description">
+                Создайте свой первый альбом уже сегодня бесплатно.
+            </p>
+        </div>
+        <div>
+            <a href="#" class="btn btn-primary btn-lg">Создать аккаунт</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

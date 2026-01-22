@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ album.title }}{% endblock %}
+
+{% block content %}
+{% include 'components/loader.html' %}
+<div class="container album-container">
+  <div class="album-content">
+    <div class="album-header">
+      <div class="album-title-group">
+        <h1>{{ album.title }}</h1>
+        <p class="album-description">{{ album.description|default:"Нет описания" }}</p>
+        <div class="album-meta">
+          <small
+            >Создан: {{ album.created_at|date:"d.m.Y" }} | Автор: {{ album.user.username }}</small
+          >
+        </div>
+      </div>
+      <div class="album-actions">
+        <a href="{% url 'generate_collage' album.id %}" class="btn btn-primary btn-collage-download">Скачать коллаж (PNG)</a>
+        {% if is_owner %}
+        <form action="{% url 'toggle_public' album.id %}" method="post" class="public-toggle-form">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="btn-toggle {% if album.is_public %}public{% else %}private{% endif %}">
+            {% if album.is_public %}Закрыть доступ{% else %}Открыть доступ по ссылке{% endif %}
+          </button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if album.is_public %}
+    <div class="share-box">
+      <strong>Ссылка для доступа:</strong>
+      <p class="share-description">
+        Любой, у кого есть эта ссылка, сможет просмотреть этот альбом.
+      </p>
+      <div class="share-input-group">
+        <input type="text" value="{{ absolute_uri }}" readonly class="share-input" id="shareLink" />
+        <button class="btn-copy">Копировать</button>
+      </div>
+    </div>
+    {% endif %} {% if is_owner or is_editor %}
+    <div class="management-section">
+      <h3>Управление альбомом</h3>
+
+      <div class="actions-group">
+        <form
+          action="{% url 'add_photos' album.id %}"
+          method="post"
+          enctype="multipart/form-data"
+          class="add-photos-form">
+          {% csrf_token %}
+          <label for="file-upload" class="custom-file-upload" id="upload-label">
+            <i class="fas fa-cloud-upload-alt"></i> Добавить фото
+          </label>
+          <p class="file-limit-hint">Максимальный размер фото: 10 МБ</p>
+          <input
+            id="file-upload"
+            name="photos"
+            type="file"
+            multiple
+            class="hidden" />
+        </form>
+
+        {% if is_owner %}
+        <button
+          id="btn-delete-album"
+          class="btn-danger">
+          Удалить альбом
+        </button>
+        <form
+          id="delete-album-form"
+          action="{% url 'delete_album' album.id %}"
+          method="post"
+          class="hidden">
+          {% csrf_token %}
+        </form>
+        {% endif %}
+      </div>
+
+      {% if is_owner %}
+      <div class="collaborators-box">
+        <h4>Соавторы</h4>
+        <p class="text-muted">Соавторы могут добавлять фотографии в этот альбом.</p>
+
+        <ul class="collaborators-list">
+          {% for editor in album.editors.all %}
+          <li class="collaborator-item">
+            <span>{{ editor.username }}</span>
+            <form
+              action="{% url 'remove_collaborator' album.id editor.id %}"
+              method="post"
+              class="inline-form">
+              {% csrf_token %}
+              <button type="submit" class="btn-remove" title="Удалить доступ">&times;</button>
+            </form>
+          </li>
+          {% empty %}
+          <li class="empty-list">Нет соавторов</li>
+          {% endfor %}
+        </ul>
+
+        <form
+          action="{% url 'add_collaborator' album.id %}"
+          method="post"
+          class="add-collaborator-form">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="username"
+            placeholder="Имя пользователя"
+            required
+            class="form-input-sm" />
+          <button type="submit" class="btn-sm">Добавить</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="photos-grid">
+      {% for photo in photos %}
+      <div class="photo-card">
+        {% if photo.image %}
+        <img src="{{ photo.image.url }}" alt="Photo" class="photo-img" loading="lazy" />
+          
+        {% if is_owner or is_editor %}
+        <div class="photo-actions">
+           <button class="btn-share-photo" data-photo-id="{{ photo.id }}" title="Поделиться">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+              </svg>
+           </button>
+        </div>
+        {% endif %}
+
+        {% endif %}
+      </div>
+      {% empty %}
+      <p class="empty-album">В этом альбоме пока нет фотографий.</p>
+      {% endfor %}
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+      <span class="lightbox-close">&times;</span>
+      <span class="lightbox-prev">&#10094;</span>
+      <span class="lightbox-next">&#10095;</span>
+      <img class="lightbox-content" id="lightbox-img" />
+      <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <div class="back-link-container">
+      <a href="{% url 'dashboard' %}" class="back-link">&larr; Вернуться в дашборд</a>
+    </div>
+  </div>
+</div>
+
+<!-- Share Modal -->
+{% include 'components/share_photo_modal.html' %}
+
+{% endblock %} {% block extra_js %}
+<script src="{% static 'js/pages/album_detail.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+.shared-photo-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.photo-wrapper {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    max-width: 100%;
+}
+
+.photo-wrapper img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 4px;
+    display: block;
+}
+
+.photo-meta {
+    margin-top: 20px;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.album-link {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.album-link:hover {
+    text-decoration: underline;
+}
+
+.btn-download {
+    background-color: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.btn-download:hover {
+    background-color: #2563eb;
+    color: white;
+}

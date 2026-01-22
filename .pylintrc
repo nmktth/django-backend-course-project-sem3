@@ -1,0 +1,20 @@
+[master]
+ignore=migrations,tests.py
+
+[MESSAGES CONTROL]
+disable=
+    protected-access,
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    no-member,
+    import-outside-toplevel,
+    invalid-name,
+    too-many-ancestors,
+    too-many-instance-attributes,
+    too-many-arguments,
+    line-too-long
+
+[FORMAT]
+max-line-length=120
