@@ -96,7 +96,6 @@ urlpatterns = [
     path("api/", include("albums.urls")),
     # Auth endpoints
     path("api/auth/register/", UserRegistrationView.as_view(), name="api_register"),
-    path("api/auth/login/", obtain_auth_token, name="api_login"),
     path("api/auth/logout/", UserLogoutView.as_view(), name="api_logout"),
     path("api/auth/profile/", UserProfileView.as_view(), name="api_profile"),
     path("api/auth/change-password/", ChangePasswordView.as_view(), name="api_change_password"),

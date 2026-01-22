@@ -224,10 +224,10 @@ class AlbumViewSet(UserOwnedMixin, viewsets.ModelViewSet):
             user=request.user, title=title, description=original.description
         )
         # Copy photos
-        for photo in original.photos.all():  # type: ignore
+        for photo in original.photos.all():
             Photo.objects.create(
                 album=new_album,
-                image=photo.image,  # Using same file reference
+                image=photo.image,
                 is_favorite=photo.is_favorite,
             )
         serializer = self.get_serializer(new_album)
@@ -242,14 +242,12 @@ class AlbumViewSet(UserOwnedMixin, viewsets.ModelViewSet):
     def publish(self, request, pk=None):
         """Публикация альбома (Section 2, 3.5)."""
         album = self.get_object()
-        if album.photos.count() < 3:  # type: ignore
+        if album.photos.count() < 3:
             return Response(
                 {"error": "Альбом должен содержать минимум 3 фотографии."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # album.is_public = True
-        # album.save()
         return Response({"status": "Album published (mocked)"})
 
     @action(methods=["POST"], detail=True)
@@ -274,13 +272,9 @@ class AlbumViewSet(UserOwnedMixin, viewsets.ModelViewSet):
         ]
 
         def dehydrate_album_size(obj):
-            # Section 7.1
-            # We assume photo size if we could track it. Mocking simple size logic.
-            # In real world we would sum file sizes.
             return "15.5 МБ"
 
         def dehydrate_completion_status(obj):
-            # Section 7.2
             photo_count = obj.photos.count()  # type: ignore
             if photo_count == 0:
                 return "Пустой"
@@ -290,14 +284,11 @@ class AlbumViewSet(UserOwnedMixin, viewsets.ModelViewSet):
                 return "Заполнен"
 
         def dehydrate_template_type(obj):
-            # Section 7.3
-            # Assuming layout_template exists or mocking it
             layout = getattr(obj, "layout_template", "standard")
             colors = {"wedding": "💒", "travel": "✈️", "portrait": "👤", "family": "👪"}
             return f"{colors.get(layout, '📁')} {layout}"
 
         def dehydrate_album_rating(obj):
-            # Section 7.4
             views = getattr(obj, "views_count", 0)
             if views > 1000:
                 return "Популярный"
@@ -321,7 +312,7 @@ class AlbumViewSet(UserOwnedMixin, viewsets.ModelViewSet):
         def extract_row(album):
             return [
                 album.title,
-                str(album.photos.count()),  # type: ignore
+                str(album.photos.count()),
                 album.created_at.strftime("%Y-%m-%d"),
                 "Standard",  # Mock template
                 "Draft",  # Mock status
@@ -343,7 +334,7 @@ class AlbumViewSet(UserOwnedMixin, viewsets.ModelViewSet):
     @action(detail=True, methods=["post"], url_path="upload-photos")
     def upload_photos(self, request, pk=None):
         album = self.get_object()
-        images = request.FILES.getlist("images")  # Expecting key 'images'
+        images = request.FILES.getlist("images")
 
         if not images:
             return Response({"error": "No images provided"}, status=status.HTTP_400_BAD_REQUEST)
@@ -361,15 +352,7 @@ class AlbumViewSet(UserOwnedMixin, viewsets.ModelViewSet):
     @action(detail=True, methods=["post"], url_path="generate-collage")
     def generate_collage(self, request, pk=None):
         album = self.get_object()
-
-        # "Generate based on best shots"
-        # We look for photos marked as favorite first
-        # use_best = request.data.get("use_best_shots", False)  # Optional flag from frontend
-
-        photos = album.photos.all()  # type: ignore
-
-        # If user explicitly wants best shots, or just as a default logic if we decide:
-        # Let's say if we have favorites, we use them. If not, we use all.
+        photos = album.photos.all()
         favorites = photos.filter(is_favorite=True)
         if favorites.exists():
             photos_to_use = favorites
@@ -826,5 +809,5 @@ def public_photo_view(request, token):
     """
     photo = get_object_or_404(Photo, public_token=token)
 
-    context = {"photo": photo, "album": photo.album, "download_name": f"photo_{photo.id}.jpg"}  # type: ignore
+    context = {"photo": photo, "album": photo.album, "download_name": f"photo_{photo.id}.jpg"}
     return render(request, "public_photo.html", context)

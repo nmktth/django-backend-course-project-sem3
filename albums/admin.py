@@ -15,22 +15,13 @@ class AlbumResource(resources.ModelResource):
         fields = ("id", "title", "user__username", "is_public", "created_at", "photo_count")
         export_order = ("id", "title", "user__username", "created_at", "is_public", "photo_count")
 
-    # Customization 1: Dehydrate field (Transform value during export)
     def dehydrate_is_public(self, album):
         return "Public" if album.is_public else "Private"
 
-    # Customization 2: Get specific field (Calculate value)
     def dehydrate_photo_count(self, album):
         return album.photos.count()
 
-    # Customization 3: Filter Queryset for Export (e.g., exclude empty albums or sort)
     def get_export_queryset(self, request, queryset):
-        """
-        Custom export queryset:
-        Only export albums that are either public or belong to the current user (if user is not superuser).
-        Superusers get everything selected.
-        Example customization: Ordered by reversed creation date.
-        """
         return queryset.order_by("-created_at")
 
 
@@ -80,7 +71,6 @@ class BugReportAdmin(ImportExportModelAdmin):
     date_hierarchy = "created_at"
     readonly_fields = ("created_at",)
     raw_id_fields = ("user",)
-    # Keeping the custom action as well
     actions = ["export_to_excel"]
 
     @admin.action(description="Экспорт выбранных баг-репортов в Excel (Custom)")
